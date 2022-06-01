@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"fmt"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -41,7 +42,11 @@ func (s *linkService) CreateShortLink(c *fiber.Ctx) link {
 
 	if l.SHORT_LINK != "" {
 		l.FULL_LINK = payload.FULL_LINK
-		return l
+		return link{
+			FULL_LINK:  payload.FULL_LINK,
+			SHORT_LINK: os.Getenv("DOMAIN") + "/" + l.SHORT_LINK,
+		}
+		// return os.Getenv("DOMAIN") + "/" + l
 	}
 
 	shortHash := createHashAndCheckDB(s.db, l.FULL_LINK)
@@ -53,9 +58,11 @@ func (s *linkService) CreateShortLink(c *fiber.Ctx) link {
 	`
 	s.db.Exec(sqlQuery, payload.FULL_LINK, shortHash)
 
+	shortLink := os.Getenv("DOMAIN") + "/" + shortHash
+
 	return link{
 		FULL_LINK:  payload.FULL_LINK,
-		SHORT_LINK: shortHash,
+		SHORT_LINK: shortLink,
 	}
 }
 
@@ -84,7 +91,7 @@ func createHashAndCheckDB(db *sql.DB, fullLink string) string {
 
 	linkStr := string(hash[:])
 	shortHash := ""
-	for i := 7; i < 17; i++ {
+	for i := 7; i < 13; i++ {
 		var char = string(linkStr[i])
 		if char != "." && char != "/" {
 			shortHash += char

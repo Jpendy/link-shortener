@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"link-shortener/models"
+	"mime"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -13,6 +14,7 @@ import (
 
 func main() {
 	godotenv.Load(".env")
+	_ = mime.AddExtensionType(".js", "text/javascript")
 
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	{
@@ -34,9 +36,7 @@ func main() {
 
 	linkService := models.NewLinkService(db)
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
-	})
+	app.Static("/", "./fe")
 
 	app.Post("/shorten", func(c *fiber.Ctx) error {
 		return c.JSON(linkService.CreateShortLink(c))
