@@ -45,5 +45,5 @@ func main() {
 		return c.Redirect(fullLink)
 	})
 
-	app.Listen(fmt.Sprintf("localhost:%v", os.Getenv("PORT")))
+	app.Listen(os.Getenv("PORT"))
 }
