@@ -17,7 +17,7 @@ form.addEventListener('submit', (e) => {
         .then(({ shortLink }) => {
             console.log('short link:', shortLink)
             a.textContent = shortLink;
-            a.href = shortLink
+            a.href = shortLink.split('/')[1]
             console.log('a tag href: ', a.href)
         })
 
