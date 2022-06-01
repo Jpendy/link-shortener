@@ -15,8 +15,8 @@ form.addEventListener('submit', (e) => {
     })
         .then(res => res.json())
         .then(({ shortLink }) => {
-            a.textContent = "www." + shortLink;
-            a.href = 'http://www.' + shortLink
+            a.textContent = shortLink;
+            a.href = shortLink
         })
 
 })
