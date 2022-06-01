@@ -15,20 +15,18 @@ func main() {
 	godotenv.Load(".env")
 
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
-	{
-		if err != nil {
-			fmt.Println(err)
-		}
-		// close database
-		defer db.Close()
-
-		// check connection
-		err = db.Ping()
-		if err != nil {
-			fmt.Println(err)
-		}
-		fmt.Println("Postgres is connected!")
+	if err != nil {
+		fmt.Println(err)
 	}
+	// close database
+	defer db.Close()
+
+	// check connection
+	err = db.Ping()
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Postgres is connected!")
 
 	app := fiber.New()
 
