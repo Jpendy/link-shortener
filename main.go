@@ -17,7 +17,7 @@ func main() {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	{
 		if err != nil {
-			panic(err)
+			fmt.Println(err)
 		}
 		// close database
 		defer db.Close()
@@ -25,7 +25,7 @@ func main() {
 		// check connection
 		err = db.Ping()
 		if err != nil {
-			panic(err)
+			fmt.Println(err)
 		}
 		fmt.Println("Postgres is connected!")
 	}
