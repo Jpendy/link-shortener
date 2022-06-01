@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"link-shortener/models"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -31,8 +32,19 @@ func main() {
 
 	app := fiber.New()
 
+	linkService := models.NewLinkService(db)
+
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World!")
+	})
+
+	app.Post("/shorten", func(c *fiber.Ctx) error {
+		return c.JSON(linkService.CreateShortLink(c))
+	})
+
+	app.Get("/:hash", func(c *fiber.Ctx) error {
+		fullLink := linkService.GetFullLink(c.Params("hash"))
+		return c.Redirect(fullLink)
 	})
 
 	app.Listen(fmt.Sprintf("localhost:%v", os.Getenv("PORT")))
