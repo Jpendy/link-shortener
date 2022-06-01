@@ -1,7 +1,7 @@
 const form = document.querySelector('form')
 const input = document.querySelector('input')
 const a = document.querySelector('a')
-const errorBox = document.querySelector('.error-message')
+const errorBox = document.querySelector('#error-message')
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
