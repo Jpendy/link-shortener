@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"link-shortener/models"
-	"mime"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -14,7 +13,6 @@ import (
 
 func main() {
 	godotenv.Load(".env")
-	_ = mime.AddExtensionType(".js", "text/javascript")
 
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	{
