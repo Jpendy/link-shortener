@@ -15,9 +15,10 @@ form.addEventListener('submit', (e) => {
     })
         .then(res => res.json())
         .then(({ shortLink }) => {
-            console.log(shortLink)
+            console.log('short link:', shortLink)
             a.textContent = shortLink;
             a.href = shortLink
+            console.log('a tag href: ', a.href)
         })
 
 })
