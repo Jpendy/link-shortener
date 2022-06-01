@@ -46,7 +46,6 @@ func (s *linkService) CreateShortLink(c *fiber.Ctx) link {
 			FULL_LINK:  payload.FULL_LINK,
 			SHORT_LINK: os.Getenv("DOMAIN") + "/" + l.SHORT_LINK,
 		}
-		// return os.Getenv("DOMAIN") + "/" + l
 	}
 
 	shortHash := createHashAndCheckDB(s.db, l.FULL_LINK)
