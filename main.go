@@ -43,5 +43,5 @@ func main() {
 		return c.Redirect(fullLink)
 	})
 
-	app.Listen(os.Getenv("PORT"))
+	app.Listen(":" + os.Getenv("PORT"))
 }
