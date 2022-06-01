@@ -1,10 +1,17 @@
 const form = document.querySelector('form')
-const a = document.getElementById('short-link-a-tag')
+const input = document.querySelector('input')
+const a = document.querySelector('a')
+const errorBox = document.querySelector('.error-message')
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
     const formData = new FormData(form)
-    const fullLink = formData.get('full-link')
+    const fullLink = formData.get('full-link').trim()
+
+    if (!fullLink.startsWith('http://') && !fullLink.startsWith('https://')) {
+        errorBox.textContent = 'Please prefix link with "http://" or "https://"'
+        return;
+    }
 
     return fetch("/shorten", {
         method: "POST",
@@ -20,4 +27,9 @@ form.addEventListener('submit', (e) => {
             a.href = href
         })
 
+})
+
+input.addEventListener('input', () => {
+    a.textContent = '';
+    errorBox.textContent = '';
 })
