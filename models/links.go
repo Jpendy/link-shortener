@@ -93,7 +93,7 @@ func createHashAndCheckDB(db *sql.DB, fullLink string) string {
 
 	linkStr := string(hash[:])
 	shortHash := ""
-	for i := 7; i < 13; i++ {
+	for i := 7; i < 12; i++ {
 		var char = string(linkStr[i])
 		if char != "." && char != "/" {
 			shortHash += char
