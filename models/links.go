@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -32,18 +33,20 @@ func (s *linkService) CreateShortLink(c *fiber.Ctx) link {
 
 	var l link
 
+	fullLinkLowerCase := strings.ToLower(payload.FULL_LINK)
+
 	sqlQuery := `
 	SELECT short_link FROM links
 	WHERE full_link = $1;
 	`
-	if err := s.db.QueryRow(sqlQuery, payload.FULL_LINK).Scan(&l.SHORT_LINK); err != nil {
+	if err := s.db.QueryRow(sqlQuery, fullLinkLowerCase).Scan(&l.SHORT_LINK); err != nil {
 		fmt.Println(err)
 	}
 
 	if l.SHORT_LINK != "" {
-		l.FULL_LINK = payload.FULL_LINK
+		l.FULL_LINK = fullLinkLowerCase
 		return link{
-			FULL_LINK:  payload.FULL_LINK,
+			FULL_LINK:  fullLinkLowerCase,
 			SHORT_LINK: os.Getenv("DOMAIN") + "/" + l.SHORT_LINK,
 		}
 	}
@@ -55,12 +58,12 @@ func (s *linkService) CreateShortLink(c *fiber.Ctx) link {
 	VALUES ($1, $2)
 	RETURNING *;
 	`
-	s.db.Exec(sqlQuery, payload.FULL_LINK, shortHash)
+	s.db.Exec(sqlQuery, fullLinkLowerCase, shortHash)
 
 	shortLink := os.Getenv("DOMAIN") + "/" + shortHash
 
 	return link{
-		FULL_LINK:  payload.FULL_LINK,
+		FULL_LINK:  fullLinkLowerCase,
 		SHORT_LINK: shortLink,
 	}
 }

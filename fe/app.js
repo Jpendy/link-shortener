@@ -8,7 +8,8 @@ form.addEventListener('submit', (e) => {
     const formData = new FormData(form)
     const fullLink = formData.get('full-link').trim()
 
-    if (!fullLink.startsWith('http://') && !fullLink.startsWith('https://')) {
+    const lowerLink = fullLink.toLowerCase()
+    if (!lowerLink.startsWith('http://') && !lowerLink.startsWith('https://')) {
         errorBox.textContent = 'Please prefix link with "http://" or "https://"'
         return;
     }
@@ -18,7 +19,7 @@ form.addEventListener('submit', (e) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ fullLink })
+        body: JSON.stringify({ fullLink: lowerLink })
     })
         .then(res => res.json())
         .then(({ shortLink }) => {
