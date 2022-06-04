@@ -37,6 +37,7 @@ form.addEventListener('submit', (e) => {
 })
 
 copyButton.addEventListener('click', () => {
+    console.log('CLICKED')
     navigator.clipboard.writeText(a.textContent)
     tooltip.textContent = 'Copied!'
 })
