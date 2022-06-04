@@ -24,7 +24,7 @@ form.addEventListener('submit', (e) => {
         .then(res => res.json())
         .then(({ shortLink }) => {
             const href = shortLink.split('/')[1]
-            a.textContent = shortLink;
+            a.textContent = 'www.' + shortLink;
             a.href = href
         })
 
