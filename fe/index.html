@@ -23,7 +23,7 @@
                     Enter your working link into the input below and click the button to create a nice short url
                 </p>
             </div>
-            <div class="rounded bg-white max-w-md rounded overflow-hidden shadow-xl p-5">
+            <div class="rounded bg-white max-w-md rounded shadow-xl p-5">
                 <form class="space-y-4">
                     <div class="rounded-md ">
                         <div class="grid gap-6">
@@ -33,11 +33,17 @@
                                 <input type="text" name="full-link"
                                     class="mt-1 h-9 pl-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm text-lg border-b border-gray-300">
                             </div>
-                            <div class="col-span-12" style="padding-left:8px; padding-bottom:10px">
-                                <a target="_blank" class="h-10 text-indigo-600">
+                            <div id="link-box" class="col-span-12 flex justify-between">
+                                <a target="_blank" class="text-indigo-600">
 
                                 </a>
                                 <p id="error-message" style="color:red"></p>
+                                <div class="tooltip">
+                                    <button type="button" id="copy-button" class="hidden">
+                                        <img src="./public/images/copy-to-clipboard.png" width="20" />
+                                        <span id="tooltiptext" class="tooltiptext">Copy to clipboard</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
